@@ -39,10 +39,17 @@ public class TakingTurnsQueue
         }
         else
         {
+            // var backLists = new List<Person>();
+            // var persons = _people;
+            // for(int i=0; i < persons.Length; i++)
+            // {
+                
+            // }
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+            if (person.Turns > 1 || person.Turns <= 0)
             {
-                person.Turns -= 1;
+                if(person.Turns > 1)
+                    person.Turns -= 1;
                 _people.Enqueue(person);
             }
 
