@@ -25,6 +25,11 @@ public class Maze
         _mazeMap = mazeMap;
     }
 
+    // private bool CheckMovement(int ind)
+    // {
+    //     return
+    // }
+
     // TODO Problem 4 - ADD YOUR CODE HERE
     /// <summary>
     /// Check to see if you can move left.  If you can, then move.  If you
@@ -33,6 +38,17 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        if (_mazeMap[(_currX, _currY)][0])
+        {
+            _currX -= 1;
+            if (_currX == 0)
+                _currX = 6;
+            // _currY += 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -42,6 +58,18 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+         if (_mazeMap[(_currX, _currY)][1])
+        {
+            _currX += 1;
+            // if(_currX > 6)
+            //     _currX = 6;
+
+            // _currY += 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -51,6 +79,17 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+         if (_mazeMap[(_currX, _currY)][2])
+        {
+            // _currX += 1;
+            _currY -= 1;
+            if(_currY == 0)
+                _currY = 6;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -60,6 +99,17 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+         if (_mazeMap[(_currX, _currY)][3])
+        {
+            // _currX += 1;
+            _currY += 1;
+            if(_currY > 6)
+                _currY = 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     public string GetStatus()

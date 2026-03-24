@@ -25,6 +25,7 @@ public class Translator
     public void AddWord(string fromWord, string toWord)
     {
         // ADD YOUR CODE HERE
+        _words.Add(fromWord, toWord);
     }
 
     /// <summary>
@@ -35,6 +36,14 @@ public class Translator
     public string Translate(string fromWord)
     {
         // ADD YOUR CODE HERE
-        return "";
+        try
+        {
+            var trans = _words[fromWord];
+            return trans;
+        }catch(KeyNotFoundException)
+        {
+            // Console.WriteLine(e.ToString());
+            return "Opps 🧐 Word not in dictionary";
+        }
     }
 }
