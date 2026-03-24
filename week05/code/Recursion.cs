@@ -15,7 +15,10 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        int total = n*n;
+        if (n != 0)
+            total += SumSquaresRecursive(n-1);
+        return total;
     }
 
     /// <summary>
