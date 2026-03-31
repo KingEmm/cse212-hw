@@ -1,4 +1,5 @@
 using System.Collections;
+using Microsoft.VisualBasic;
 
 public static class Recursion
 {
@@ -247,12 +248,67 @@ public static class Recursion
         if (currPath == null) {
             currPath = new List<ValueTuple<int, int>>();
         }
-        
-        // currPath.Add((1,2)); // Use this syntax to add to the current path
 
+        
+        currPath.Add((x,y)); // Use this syntax to add to the current path
         // TODO Start Problem 5
         // ADD CODE HERE
-
-        // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+        if(maze.Data.Length == ((x+1) * (y+1)))//new ValueTuple<int, int>(x, y))
+        {
+            results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+            currPath.Remove((x,y));
+            return ; 
+        }
+        int left= x-1;
+        int right=x+1;
+        int up=y-1;
+        int down=y+1;
+        bool ups = maze.IsValidMove(currPath, x, up);
+        bool downs = maze.IsValidMove(currPath, x, down);
+        bool lefts = maze.IsValidMove(currPath, left, y);
+        bool rights = maze.IsValidMove(currPath, right, y);
+        if(ups)
+        {
+            SolveMaze(results, maze, x, up, currPath);
+            // currPath.Remove((x,y));
+        }
+        if(rights)
+        {
+            SolveMaze(results, maze, right, y, currPath);
+            // currPath.Remove((x,y));
+        }
+        if(lefts)
+        {
+            SolveMaze(results, maze, left, y, currPath);
+        }
+        if(downs)
+        {
+            SolveMaze(results, maze, x, down, currPath);
+        }
+        currPath.Remove((x,y));
+        return;
+            // SolveMaze(results, maze, x, y, currPath);
+        // if(maze.IsValidMove(currPath, x, up))
+        // {
+        //     SolveMaze(results, maze, x, up, currPath);
+        // }
+        // else if(maze.IsValidMove(currPath, right, y))
+        // {
+        //     SolveMaze(results, maze, right, y, currPath);
+        // }
+        // else if(maze.IsValidMove(currPath, x, down))
+        // {
+        //     SolveMaze(results, maze, x, down, currPath);
+        // }
+        // else if(maze.IsValidMove(currPath, left, y))
+        // {
+        //     SolveMaze(results, maze, left, y, currPath);
+        // }
+        // else
+        // {
+        //     return;
+        //     // SolveMaze(results, maze, x, y, currPath);
+        // }
     }
+
 }
