@@ -43,6 +43,69 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
+        // Try adding each of the available letters
+        // to the 'word' and add up all the
+        // resulting permutations.
+        if (letters.Length > size)
+        {
+           var remainder = letters.Length - size;
+          for(int i=0; i < letters.Length; i++)
+            {
+                if(remainder == 1)
+                {
+                    var letts = letters.Remove(i, 1);
+                    PermutationsChoose(results, letts, size);
+                }
+                else if(remainder == 2)
+                {
+                    var letts = letters.Remove(i, 1);
+                    if(i >= letts.Length)
+                        letts = letts.Remove(0, 1);
+                    else
+                        letts = letts.Remove(i, 1);
+                    PermutationsChoose(results, letts, size, word);
+                }
+                else if(remainder == 3)
+                {
+                    var letts = letters.Remove(i, 1);
+                    if(i >= letts.Length)
+                        letts = letts.Remove(0, 1);
+                    else
+                        letts = letts.Remove(i, 1);
+                    if(i >= letts.Length)
+                        letts = letts.Remove(0, 1);
+                    else
+                        letts = letts.Remove(i, 1);
+                    PermutationsChoose(results, letts, size, word);
+                }
+                else if(remainder == 4)
+                {
+                    
+                }
+            }
+        }
+
+        if (letters.Length == 0 & word.Length == size)
+        {
+            if(!results.Contains(word))
+                results.Add(word);
+            return;
+        } 
+        else
+        {
+            for (var i = 0; i < letters.Length; i++)
+            {
+                // Make a copy of the letters to pass to the
+                // the next call to permutations.  We need
+                // to remove the letter we just added before
+                // we call permutations again.
+                var lettersLeft = letters.Remove(i, 1);
+
+                // Add the new letter to the word we have so far
+                PermutationsChoose(results, lettersLeft, size, word + letters[i]);
+            }
+        }
+
     }
 
     /// <summary>
@@ -102,8 +165,16 @@ public static class Recursion
         // TODO Start Problem 3
 
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        return ways;
+        if (remember == null)
+            remember = new();
+        if (remember!.ContainsKey(s))
+            return remember[s];
+        else
+        {
+            decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+            remember[s] = ways;
+            return ways;
+        }
     }
 
     /// <summary>
@@ -122,6 +193,47 @@ public static class Recursion
     public static void WildcardBinary(string pattern, List<string> results)
     {
         // TODO Start Problem 4
+        // if(!pattern.Contains('*'))
+        //     results.Add(pattern);
+        //     return;
+
+        if (!pattern.Contains('*') || pattern == "")
+        {
+            results.Add(pattern);
+            return;
+        }
+
+
+        char[] pattern0 = new char[pattern.Length];
+        char[] pattern1= new char[pattern.Length];
+        int c=0;
+        for(int i=0; i<pattern.Length; i++)
+        {
+            pattern0[i] = pattern[i];
+            pattern1[i] = pattern[i];
+
+            if(pattern[i] == '*')
+            {
+                if(c == 0)
+                {
+                    pattern0[i] = '0';
+                    pattern1[i] = '1';
+                    c++;
+                }
+            }
+        }
+        if (pattern0.Contains('*'))
+        {
+            WildcardBinary(new string(pattern0), results);
+            WildcardBinary(new string(pattern1), results);
+        }
+        else
+        {
+            results.Add(new string(pattern0));
+            results.Add(new string(pattern1));
+            return;
+        }
+
     }
 
     /// <summary>
