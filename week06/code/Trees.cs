@@ -1,3 +1,5 @@
+using System.Security.AccessControl;
+
 public static class Trees
 {
     /// <summary>
@@ -48,6 +50,34 @@ public static class Trees
     /// <param name="bst">the BinarySearchTree in which to insert the values</param>
     private static void InsertMiddle(int[] sortedNumbers, int first, int last, BinarySearchTree bst)
     {
+        if(first > last)
+            return;
+        int middle = (first+last) / 2;
+        // if(middle >= sortedNumbers.Length-1)
+        //     return;
+        if(middle <= first)
+        {
+            bst.Insert(sortedNumbers[middle]);
+            bst.Insert(sortedNumbers[last]);
+            // bst.Insert(sortedNumbers[middle-1]);
+            // bst.Insert(sortedNumbers[middle+1]);
+            return;
+        }
+        if(middle > last)
+        {
+            bst.Insert(sortedNumbers[middle]);
+            return;
+            
+        }
+        bst.Insert(sortedNumbers[middle]);
+        // bst.Insert(sortedNumbers[(middle+last +1) / 2]);
+        // bst.Insert(sortedNumbers[(first+middle -1)/ 2]);
         // TODO Start Problem 5
+
+        // int[] rightList =sortedNumbers[..middle];
+        InsertMiddle(sortedNumbers, middle+1, last, bst);
+
+        InsertMiddle(sortedNumbers, first, middle, bst);
+        // int[] leftList =sortedNumbers[middle..];
     }
 }

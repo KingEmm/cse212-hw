@@ -81,6 +81,12 @@ public class BinarySearchTree : IEnumerable<int>
     private void TraverseBackward(Node? node, List<int> values)
     {
         // TODO Problem 3
+        if (node is not null)
+        {
+            TraverseBackward(node.Right, values);
+            values.Add(node.Data);
+            TraverseBackward(node.Left, values);
+        }
     }
 
     /// <summary>
@@ -88,9 +94,24 @@ public class BinarySearchTree : IEnumerable<int>
     /// </summary>
     public int GetHeight()
     {
+        int left =0;
+        int right =0;
+        
         if (_root is null)
             return 0;
-        return _root.GetHeight();
+        if(_root.Left is not null)
+            left = _root.Left.GetHeight();
+        if(_root.Right is not null)
+            right = _root.Right.GetHeight();
+
+        if(_root.Right is null & _root.Left is null)
+            return 1;
+        // else
+        //     return (left+1 + right+1) / 2;
+
+        if(right > left)
+            return right+1;
+        return left+1;
     }
 
     public override string ToString()
